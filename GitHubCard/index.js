@@ -2,36 +2,32 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-// axios.get('https://api.github.com/users/chris-ian-jones')
-//   .then(data => {
-//     createGitHubCard(
-//       data.avatar_url, 
-//       data.name, 
-//       data.login, 
-//       data.location, 
-//       data.html_url, 
-//       data.followers, 
-//       data.following, 
-//       data.bio)
-//     const mainCardsContainer = document.querySelector('.cards')
-//     mainCardsContainer.appendChild(cardContainer)
-//   })
-//   .catch(error => {
-//     console.log('error message')
-//   })
 
-axios.get('https://api.github.com/users/chris-ian-jones')
+const followersArray = ['chris-ian-jones','tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+
+followersArray.forEach(item => {
+
+axios.get(`https://api.github.com/users/${item}`)
   .then(data => {
     const userData = data.data
-    // console.log(userData)
-    const newCard = createGitHubCard(userData.avatar_url, userData.name, userData.login, userData.location, userData.html_url, userData.followers, userData.following, userData.bio)
-    // console.log(newCardContainer)
+    const newCard = createGitHubCard(
+      userData.avatar_url, 
+      userData.name, 
+      userData.login, 
+      userData.location, 
+      userData.html_url, 
+      userData.followers, 
+      userData.following, 
+      userData.bio
+    )
     const mainCardsContainer = document.querySelector('.cards')
     mainCardsContainer.appendChild(newCard)
   })
   .catch(error => {
     console.log('error message')
   })
+
+})
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -54,7 +50,7 @@ axios.get('https://api.github.com/users/chris-ian-jones')
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+
 
 // const exampleObject = {
 //   "login": "chris-ian-jones",
@@ -142,7 +138,7 @@ function createGitHubCard(avatar_url, name, username, location, htmlUrl, followe
   cardName.textContent = name
   cardUsername.textContent = username
   cardLocation.textContent = `Location: ${location}`
-  cardProfile.innerHTML = `Profile: <a href="${htmlUrl}" target="${htmlUrl}"></a>`
+  cardProfile.innerHTML = `Profile: <a href="${htmlUrl}" target="${htmlUrl}">${htmlUrl}</a>`
   // cardProfileLink.href = htmlUrl
   // cardProfileLink.target = htmlUrl
   cardFollowers.textContent = `Followers: ${followers}`
