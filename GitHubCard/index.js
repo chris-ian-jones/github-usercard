@@ -2,13 +2,13 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-axios.get('https://api.github.com/users/chris-ian-jones')
-  .then(data => {
-    console.log('response:', data)
-  })
-  .catch(error => {
-    console.log('error message')
-  })
+// axios.get('https://api.github.com/users/chris-ian-jones')
+//   .then(data => {
+//     console.log('response:', data)
+//   })
+//   .catch(error => {
+//     console.log('error message')
+//   })
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -52,6 +52,24 @@ const followersArray = [];
 </div>
 
 */
+
+function createGitHubCard(singleObject/*?*/) {
+  const cardContainer = document.createElement('div')
+  const cardUserImage = document.createElement('img')
+  const cardInfoContainer = document.createElement('div')
+  const cardName = document.createElement('h3')
+  const cardUsername = document.createElement('p')
+  const cardLocation = document.createElement('p')
+  const cardProfile = document.createElement('p')
+  const cardProfileLink = document.createElement('a')
+  const cardFollowers = document.createElement('p')
+  const cardFollowing = document.createElement('p')
+  const cardBio = document.createElement('p')
+
+  console.log(cardContainer);
+}
+
+createGitHubCard()
 
 /* List of LS Instructors Github username's: 
   tetondan
