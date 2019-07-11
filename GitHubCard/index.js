@@ -66,7 +66,18 @@ function createGitHubCard(singleObject/*?*/) {
   const cardFollowing = document.createElement('p')
   const cardBio = document.createElement('p')
 
-  console.log(cardContainer);
+  cardContainer.appendChild(cardUserImage)
+  cardContainer.appendChild(cardInfoContainer)
+  cardInfoContainer.appendChild(cardName)
+  cardInfoContainer.appendChild(cardUsername)
+  cardInfoContainer.appendChild(cardLocation)
+  cardInfoContainer.appendChild(cardProfile)
+  cardProfile.appendChild(cardProfileLink)
+  cardInfoContainer.appendChild(cardFollowers)
+  cardInfoContainer.appendChild(cardFollowing)
+  cardInfoContainer.appendChild(cardBio)
+
+  console.log(cardContainer)
 }
 
 createGitHubCard()
