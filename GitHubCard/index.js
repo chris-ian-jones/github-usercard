@@ -3,30 +3,38 @@
            https://api.github.com/users/<your name>
 */
 
+// define array of GitHub usernames
 const followersArray = ['chris-ian-jones','tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
 
-followersArray.forEach(item => {
+// loop over array of GitHub usernames
+followersArray.forEach(username => {
 
-axios.get(`https://api.github.com/users/${item}`)
-  .then(data => {
-    const userData = data.data
-    const newCard = createGitHubCard(
-      userData.avatar_url, 
-      userData.name, 
-      userData.login, 
-      userData.location, 
-      userData.html_url, 
-      userData.followers, 
-      userData.following, 
-      userData.bio
-    )
-    const mainCardsContainer = document.querySelector('.cards')
-    mainCardsContainer.appendChild(newCard)
-  })
-  .catch(error => {
-    console.log('error message')
-  })
+  // for each item in array, make a GET request via axios to GitHub api
+  // template literal includes current item in array (Github username)
+  axios.get(`https://api.github.com/users/${username}`)
 
+    // if promise's state is 'fulfilled', pass the api data to createGitHubCard component
+    // create new component and append it as child to cards div which we grabbed from the body of existing html
+    .then(data => {
+      const userData = data.data
+      const newCard = createGitHubCard(
+        userData.avatar_url, 
+        userData.name, 
+        userData.login, 
+        userData.location, 
+        userData.html_url, 
+        userData.followers, 
+        userData.following, 
+        userData.bio
+      )
+      const mainCardsContainer = document.querySelector('.cards')
+      mainCardsContainer.appendChild(newCard)
+    })
+
+    // if promise's state is 'rejected', log the error message
+    .catch(error => {
+      console.log("You've got an error!")
+    })
 })
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
@@ -50,41 +58,6 @@ axios.get(`https://api.github.com/users/${item}`)
           user, and adding that card to the DOM.
 */
 
-
-
-// const exampleObject = {
-//   "login": "chris-ian-jones",
-//   "id": 48461758,
-//   "node_id": "MDQ6VXNlcjQ4NDYxNzU4",
-//   "avatar_url": "https://avatars0.githubusercontent.com/u/48461758?v=4",
-//   "gravatar_id": "",
-//   "url": "https://api.github.com/users/chris-ian-jones",
-//   "html_url": "https://github.com/chris-ian-jones",
-//   "followers_url": "https://api.github.com/users/chris-ian-jones/followers",
-//   "following_url": "https://api.github.com/users/chris-ian-jones/following{/other_user}",
-//   "gists_url": "https://api.github.com/users/chris-ian-jones/gists{/gist_id}",
-//   "starred_url": "https://api.github.com/users/chris-ian-jones/starred{/owner}{/repo}",
-//   "subscriptions_url": "https://api.github.com/users/chris-ian-jones/subscriptions",
-//   "organizations_url": "https://api.github.com/users/chris-ian-jones/orgs",
-//   "repos_url": "https://api.github.com/users/chris-ian-jones/repos",
-//   "events_url": "https://api.github.com/users/chris-ian-jones/events{/privacy}",
-//   "received_events_url": "https://api.github.com/users/chris-ian-jones/received_events",
-//   "type": "User",
-//   "site_admin": false,
-//   "name": 'Chris Jones',
-//   "company": null,
-//   "blog": "",
-//   "location": 'Oxford',
-//   "email": null,
-//   "hireable": null,
-//   "bio": 'This is my bio',
-//   "public_repos": 26,
-//   "public_gists": 1,
-//   "followers": 1,
-//   "following": 100,
-//   "created_at": "2019-03-12T01:42:30Z",
-//   "updated_at": "2019-06-24T15:30:52Z"
-// }
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
@@ -105,7 +78,10 @@ axios.get(`https://api.github.com/users/${item}`)
 
 */
 
+// component to create above DOM element, passing in data from api
 function createGitHubCard(avatar_url, name, username, location, htmlUrl, followers, following, bio) {
+
+  // create elements
   const cardContainer = document.createElement('div')
   const cardUserImage = document.createElement('img')
   const cardInfoContainer = document.createElement('div')
@@ -118,6 +94,7 @@ function createGitHubCard(avatar_url, name, username, location, htmlUrl, followe
   const cardFollowing = document.createElement('p')
   const cardBio = document.createElement('p')
 
+  // append the elements as children to build html scaffolding
   cardContainer.appendChild(cardUserImage)
   cardContainer.appendChild(cardInfoContainer)
   cardInfoContainer.appendChild(cardName)
@@ -129,11 +106,13 @@ function createGitHubCard(avatar_url, name, username, location, htmlUrl, followe
   cardInfoContainer.appendChild(cardFollowing)
   cardInfoContainer.appendChild(cardBio)
 
+  // add classlists to elements for css styling
   cardContainer.classList.add('card')
   cardInfoContainer.classList.add('card-info')
   cardName.classList.add('name')
   cardUsername.classList.add('username')
 
+  // add/update attributes for elements
   cardUserImage.src = avatar_url
   cardName.textContent = name
   cardUsername.textContent = username
@@ -145,9 +124,9 @@ function createGitHubCard(avatar_url, name, username, location, htmlUrl, followe
   cardFollowing.textContent = `Following: ${following}`
   cardBio.textContent = `Bio: ${bio}`
  
+  // return the parent div of all elements created
   return cardContainer
 }
-// createGitHubCard(userData.avatar_url, userData.name, userData.login, userData.location, userData.html_url, userData.followers, userData.following, userData.bio)
 
 /* List of LS Instructors Github username's: 
   tetondan
