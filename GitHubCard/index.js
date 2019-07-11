@@ -4,11 +4,34 @@
 */
 // axios.get('https://api.github.com/users/chris-ian-jones')
 //   .then(data => {
-//     console.log('response:', data)
+//     createGitHubCard(
+//       data.avatar_url, 
+//       data.name, 
+//       data.login, 
+//       data.location, 
+//       data.html_url, 
+//       data.followers, 
+//       data.following, 
+//       data.bio)
+//     const mainCardsContainer = document.querySelector('.cards')
+//     mainCardsContainer.appendChild(cardContainer)
 //   })
 //   .catch(error => {
 //     console.log('error message')
 //   })
+
+axios.get('https://api.github.com/users/chris-ian-jones')
+  .then(data => {
+    const userData = data.data
+    // console.log(userData)
+    const newCard = createGitHubCard(userData.avatar_url, userData.name, userData.login, userData.location, userData.html_url, userData.followers, userData.following, userData.bio)
+    // console.log(newCardContainer)
+    const mainCardsContainer = document.querySelector('.cards')
+    mainCardsContainer.appendChild(newCard)
+  })
+  .catch(error => {
+    console.log('error message')
+  })
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -33,39 +56,39 @@
 
 const followersArray = [];
 
-const exampleObject = {
-  "login": "chris-ian-jones",
-  "id": 48461758,
-  "node_id": "MDQ6VXNlcjQ4NDYxNzU4",
-  "avatar_url": "https://avatars0.githubusercontent.com/u/48461758?v=4",
-  "gravatar_id": "",
-  "url": "https://api.github.com/users/chris-ian-jones",
-  "html_url": "https://github.com/chris-ian-jones",
-  "followers_url": "https://api.github.com/users/chris-ian-jones/followers",
-  "following_url": "https://api.github.com/users/chris-ian-jones/following{/other_user}",
-  "gists_url": "https://api.github.com/users/chris-ian-jones/gists{/gist_id}",
-  "starred_url": "https://api.github.com/users/chris-ian-jones/starred{/owner}{/repo}",
-  "subscriptions_url": "https://api.github.com/users/chris-ian-jones/subscriptions",
-  "organizations_url": "https://api.github.com/users/chris-ian-jones/orgs",
-  "repos_url": "https://api.github.com/users/chris-ian-jones/repos",
-  "events_url": "https://api.github.com/users/chris-ian-jones/events{/privacy}",
-  "received_events_url": "https://api.github.com/users/chris-ian-jones/received_events",
-  "type": "User",
-  "site_admin": false,
-  "name": 'Chris Jones',
-  "company": null,
-  "blog": "",
-  "location": 'Oxford',
-  "email": null,
-  "hireable": null,
-  "bio": 'This is my bio',
-  "public_repos": 26,
-  "public_gists": 1,
-  "followers": 1,
-  "following": 100,
-  "created_at": "2019-03-12T01:42:30Z",
-  "updated_at": "2019-06-24T15:30:52Z"
-}
+// const exampleObject = {
+//   "login": "chris-ian-jones",
+//   "id": 48461758,
+//   "node_id": "MDQ6VXNlcjQ4NDYxNzU4",
+//   "avatar_url": "https://avatars0.githubusercontent.com/u/48461758?v=4",
+//   "gravatar_id": "",
+//   "url": "https://api.github.com/users/chris-ian-jones",
+//   "html_url": "https://github.com/chris-ian-jones",
+//   "followers_url": "https://api.github.com/users/chris-ian-jones/followers",
+//   "following_url": "https://api.github.com/users/chris-ian-jones/following{/other_user}",
+//   "gists_url": "https://api.github.com/users/chris-ian-jones/gists{/gist_id}",
+//   "starred_url": "https://api.github.com/users/chris-ian-jones/starred{/owner}{/repo}",
+//   "subscriptions_url": "https://api.github.com/users/chris-ian-jones/subscriptions",
+//   "organizations_url": "https://api.github.com/users/chris-ian-jones/orgs",
+//   "repos_url": "https://api.github.com/users/chris-ian-jones/repos",
+//   "events_url": "https://api.github.com/users/chris-ian-jones/events{/privacy}",
+//   "received_events_url": "https://api.github.com/users/chris-ian-jones/received_events",
+//   "type": "User",
+//   "site_admin": false,
+//   "name": 'Chris Jones',
+//   "company": null,
+//   "blog": "",
+//   "location": 'Oxford',
+//   "email": null,
+//   "hireable": null,
+//   "bio": 'This is my bio',
+//   "public_repos": 26,
+//   "public_gists": 1,
+//   "followers": 1,
+//   "following": 100,
+//   "created_at": "2019-03-12T01:42:30Z",
+//   "updated_at": "2019-06-24T15:30:52Z"
+// }
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
@@ -126,9 +149,9 @@ function createGitHubCard(avatar_url, name, username, location, htmlUrl, followe
   cardFollowing.textContent = `Following: ${following}`
   cardBio.textContent = `Bio: ${bio}`
  
-  console.log(cardContainer)
+  return cardContainer
 }
-createGitHubCard(exampleObject.avatar_url, exampleObject.name, exampleObject.login, exampleObject.location, exampleObject.html_url, exampleObject.followers, exampleObject.following, exampleObject.bio)
+// createGitHubCard(userData.avatar_url, userData.name, userData.login, userData.location, userData.html_url, userData.followers, userData.following, userData.bio)
 
 /* List of LS Instructors Github username's: 
   tetondan
