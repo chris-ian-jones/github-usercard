@@ -77,6 +77,11 @@ function createGitHubCard(singleObject/*?*/) {
   cardInfoContainer.appendChild(cardFollowing)
   cardInfoContainer.appendChild(cardBio)
 
+  cardContainer.classList.add('card')
+  cardInfoContainer.classList.add('card-info')
+  cardName.classList.add('name')
+  cardUsername.classList.add('username')
+
   console.log(cardContainer)
 }
 
