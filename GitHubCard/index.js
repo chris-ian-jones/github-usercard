@@ -33,6 +33,39 @@
 
 const followersArray = [];
 
+const exampleObject = {
+  "login": "chris-ian-jones",
+  "id": 48461758,
+  "node_id": "MDQ6VXNlcjQ4NDYxNzU4",
+  "avatar_url": "https://avatars0.githubusercontent.com/u/48461758?v=4",
+  "gravatar_id": "",
+  "url": "https://api.github.com/users/chris-ian-jones",
+  "html_url": "https://github.com/chris-ian-jones",
+  "followers_url": "https://api.github.com/users/chris-ian-jones/followers",
+  "following_url": "https://api.github.com/users/chris-ian-jones/following{/other_user}",
+  "gists_url": "https://api.github.com/users/chris-ian-jones/gists{/gist_id}",
+  "starred_url": "https://api.github.com/users/chris-ian-jones/starred{/owner}{/repo}",
+  "subscriptions_url": "https://api.github.com/users/chris-ian-jones/subscriptions",
+  "organizations_url": "https://api.github.com/users/chris-ian-jones/orgs",
+  "repos_url": "https://api.github.com/users/chris-ian-jones/repos",
+  "events_url": "https://api.github.com/users/chris-ian-jones/events{/privacy}",
+  "received_events_url": "https://api.github.com/users/chris-ian-jones/received_events",
+  "type": "User",
+  "site_admin": false,
+  "name": 'Chris Jones',
+  "company": null,
+  "blog": "",
+  "location": 'Oxford',
+  "email": null,
+  "hireable": null,
+  "bio": 'This is my bio',
+  "public_repos": 26,
+  "public_gists": 1,
+  "followers": 1,
+  "following": 100,
+  "created_at": "2019-03-12T01:42:30Z",
+  "updated_at": "2019-06-24T15:30:52Z"
+}
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
@@ -53,7 +86,7 @@ const followersArray = [];
 
 */
 
-function createGitHubCard(singleObject/*?*/) {
+function createGitHubCard(avatar_url, name, username, location, htmlUrl, followers, following, bio) {
   const cardContainer = document.createElement('div')
   const cardUserImage = document.createElement('img')
   const cardInfoContainer = document.createElement('div')
@@ -61,7 +94,7 @@ function createGitHubCard(singleObject/*?*/) {
   const cardUsername = document.createElement('p')
   const cardLocation = document.createElement('p')
   const cardProfile = document.createElement('p')
-  const cardProfileLink = document.createElement('a')
+  // const cardProfileLink = document.createElement('a')
   const cardFollowers = document.createElement('p')
   const cardFollowing = document.createElement('p')
   const cardBio = document.createElement('p')
@@ -72,7 +105,7 @@ function createGitHubCard(singleObject/*?*/) {
   cardInfoContainer.appendChild(cardUsername)
   cardInfoContainer.appendChild(cardLocation)
   cardInfoContainer.appendChild(cardProfile)
-  cardProfile.appendChild(cardProfileLink)
+  // cardProfile.appendChild(cardProfileLink)
   cardInfoContainer.appendChild(cardFollowers)
   cardInfoContainer.appendChild(cardFollowing)
   cardInfoContainer.appendChild(cardBio)
@@ -82,10 +115,20 @@ function createGitHubCard(singleObject/*?*/) {
   cardName.classList.add('name')
   cardUsername.classList.add('username')
 
+  cardUserImage.src = avatar_url
+  cardName.textContent = name
+  cardUsername.textContent = username
+  cardLocation.textContent = `Location: ${location}`
+  cardProfile.innerHTML = `Profile: <a href="${htmlUrl}" target="${htmlUrl}"></a>`
+  // cardProfileLink.href = htmlUrl
+  // cardProfileLink.target = htmlUrl
+  cardFollowers.textContent = `Followers: ${followers}`
+  cardFollowing.textContent = `Following: ${following}`
+  cardBio.textContent = `Bio: ${bio}`
+ 
   console.log(cardContainer)
 }
-
-createGitHubCard()
+createGitHubCard(exampleObject.avatar_url, exampleObject.name, exampleObject.login, exampleObject.location, exampleObject.html_url, exampleObject.followers, exampleObject.following, exampleObject.bio)
 
 /* List of LS Instructors Github username's: 
   tetondan
