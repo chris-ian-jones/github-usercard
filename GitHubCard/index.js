@@ -4,7 +4,7 @@
 */
 
 // define array of GitHub usernames
-const followersArray = ['chris-ian-jones','tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
 
 // loop over array of GitHub usernames
 followersArray.forEach(username => {
@@ -29,7 +29,50 @@ followersArray.forEach(username => {
       )
       const mainCardsContainer = document.querySelector('.cards')
       mainCardsContainer.appendChild(newCard)
+
+
+      /*
+      
+      // grab the current user in the arrays followers url 
+      const userFollowersUrl = userData.followers_url
+
+      // make a GET request via axios to GitHub api to get object of followers data
+      axios.get(userFollowersUrl)
+        .then(data => {
+          const userFollowersArray = data.data
+
+          // declare empty array
+          const userFollowersArrayUsername = []
+
+          // loop though followers data, pushing each followers username into empty array
+          userFollowersArray.forEach(function(userFollowers) {
+            userFollowersArrayUsername.push(userFollowers.login)
+          })
+          
+          // loop through array of followers usernames
+          // GET request via axios to GitHub api to get each followers data
+          // hit API rate limit at this point
+          userFollowersArrayUsername.forEach(followersUsername => {
+            // axios.get(`https://api.github.com/users/${followersUsername}`)
+            //   .then(data => {
+            //     console.log(data)
+            //   })
+            //   .catch(error => {
+            //     console.log('third api call error')
+            //   })
+            console.log(followersUsername)
+          })
+
+      })
+
+      .catch(error => {
+        console.log('second api call error')
+      })
+
+      */
+
     })
+
 
     // if promise's state is 'rejected', log the error message
     .catch(error => {
@@ -89,7 +132,6 @@ function createGitHubCard(avatar_url, name, username, location, htmlUrl, followe
   const cardUsername = document.createElement('p')
   const cardLocation = document.createElement('p')
   const cardProfile = document.createElement('p')
-  // const cardProfileLink = document.createElement('a')
   const cardFollowers = document.createElement('p')
   const cardFollowing = document.createElement('p')
   const cardBio = document.createElement('p')
@@ -101,7 +143,6 @@ function createGitHubCard(avatar_url, name, username, location, htmlUrl, followe
   cardInfoContainer.appendChild(cardUsername)
   cardInfoContainer.appendChild(cardLocation)
   cardInfoContainer.appendChild(cardProfile)
-  // cardProfile.appendChild(cardProfileLink)
   cardInfoContainer.appendChild(cardFollowers)
   cardInfoContainer.appendChild(cardFollowing)
   cardInfoContainer.appendChild(cardBio)
@@ -118,8 +159,6 @@ function createGitHubCard(avatar_url, name, username, location, htmlUrl, followe
   cardUsername.textContent = username
   cardLocation.textContent = `Location: ${location}`
   cardProfile.innerHTML = `Profile: <a href="${htmlUrl}" target="${htmlUrl}">${htmlUrl}</a>`
-  // cardProfileLink.href = htmlUrl
-  // cardProfileLink.target = htmlUrl
   cardFollowers.textContent = `Followers: ${followers}`
   cardFollowing.textContent = `Following: ${following}`
   cardBio.textContent = `Bio: ${bio}`
