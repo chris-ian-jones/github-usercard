@@ -29,35 +29,43 @@ followersArray.forEach(username => {
       axios.get(userFollowersUrl)
         .then(data => {
           const userFollowersArray = data.data
+          
+          // to prevent hitting the api rate limit:
+          // loop through object of followers data from api call
+          // passing each first three followers usernames into new array
           const followersUsernameArray = []
           for (let i = 0; i <3; i++) {
             followersUsernameArray.push(userFollowersArray[i].login)
           }
+
+          // loop through array of 3 x followers usernames, making a GET request via axios to GitHub api to get object of follower data
           followersUsernameArray.forEach(followersUsername => {
             axios.get(`https://api.github.com/users/${followersUsername}`)
 
+            // if promise's state is 'fulfilled', pass the api data to createGitHubCard component
+            // create new component and append it as child to cards div which we grabbed from the body of existing html
             .then(data => {
               const followerData = data.data
               const newFollowerCard = createGitHubCard(followerData)
               mainCardsContainer.appendChild(newFollowerCard)
             })
+            
+            // if third promise's state is 'rejected', log the error message
             .catch(error => {
-              console.log('followers api call error')
+              console.log("You've got an error on third promise")
             })
           })
-
-
-          })
+        })
         
-
+        // if second promise's state is 'rejected', log the error message
         .catch(error => {
-          console.log('second api call error')
+          console.log("You've got an error on second promise")
         })
     })
 
-    // if promise's state is 'rejected', log the error message
+    // if first promise's state is 'rejected', log the error message
     .catch(error => {
-      console.log("You've got an error!")
+      console.log("You've got an error on first promise")
     })
 })
 
