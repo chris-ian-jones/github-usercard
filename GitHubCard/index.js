@@ -17,62 +17,43 @@ followersArray.forEach(username => {
     // create new component and append it as child to cards div which we grabbed from the body of existing html
     .then(data => {
       const userData = data.data
-      const newCard = createGitHubCard(
-        userData.avatar_url, 
-        userData.name, 
-        userData.login, 
-        userData.location, 
-        userData.html_url, 
-        userData.followers, 
-        userData.following, 
-        userData.bio
-      )
+      const newCard = createGitHubCard(userData)
       const mainCardsContainer = document.querySelector('.cards')
       mainCardsContainer.appendChild(newCard)
 
-
-      /*
-      
       // grab the current user in the arrays followers url 
       const userFollowersUrl = userData.followers_url
-
+      
+      // STRETCH: chained promise, to programattically get followers data
       // make a GET request via axios to GitHub api to get object of followers data
       axios.get(userFollowersUrl)
         .then(data => {
           const userFollowersArray = data.data
+          const followersUsernameArray = []
+          for (let i = 0; i <3; i++) {
+            followersUsernameArray.push(userFollowersArray[i].login)
+          }
+          followersUsernameArray.forEach(followersUsername => {
+            axios.get(`https://api.github.com/users/${followersUsername}`)
 
-          // declare empty array
-          const userFollowersArrayUsername = []
-
-          // loop though followers data, pushing each followers username into empty array
-          userFollowersArray.forEach(function(userFollowers) {
-            userFollowersArrayUsername.push(userFollowers.login)
-          })
-          
-          // loop through array of followers usernames
-          // GET request via axios to GitHub api to get each followers data
-          // hit API rate limit at this point
-          userFollowersArrayUsername.forEach(followersUsername => {
-            // axios.get(`https://api.github.com/users/${followersUsername}`)
-            //   .then(data => {
-            //     console.log(data)
-            //   })
-            //   .catch(error => {
-            //     console.log('third api call error')
-            //   })
-            console.log(followersUsername)
+            .then(data => {
+              const followerData = data.data
+              const newFollowerCard = createGitHubCard(followerData)
+              mainCardsContainer.appendChild(newFollowerCard)
+            })
+            .catch(error => {
+              console.log('followers api call error')
+            })
           })
 
-      })
 
-      .catch(error => {
-        console.log('second api call error')
-      })
+          })
+        
 
-      */
-
+        .catch(error => {
+          console.log('second api call error')
+        })
     })
-
 
     // if promise's state is 'rejected', log the error message
     .catch(error => {
@@ -122,7 +103,7 @@ followersArray.forEach(username => {
 */
 
 // component to create above DOM element, passing in data from api
-function createGitHubCard(avatar_url, name, username, location, htmlUrl, followers, following, bio) {
+function createGitHubCard(object) {
 
   // create elements
   const cardContainer = document.createElement('div')
@@ -154,14 +135,14 @@ function createGitHubCard(avatar_url, name, username, location, htmlUrl, followe
   cardUsername.classList.add('username')
 
   // add/update attributes for elements
-  cardUserImage.src = avatar_url
-  cardName.textContent = name
-  cardUsername.textContent = username
-  cardLocation.textContent = `Location: ${location}`
-  cardProfile.innerHTML = `Profile: <a href="${htmlUrl}" target="${htmlUrl}">${htmlUrl}</a>`
-  cardFollowers.textContent = `Followers: ${followers}`
-  cardFollowing.textContent = `Following: ${following}`
-  cardBio.textContent = `Bio: ${bio}`
+  cardUserImage.src = object.avatar_url
+  cardName.textContent = object.name
+  cardUsername.textContent = object.login
+  cardLocation.textContent = `Location: ${object.location}`
+  cardProfile.innerHTML = `Profile: <a href="${object.html_url}" target="${object.html_url}">${object.html_url}</a>`
+  cardFollowers.textContent = `Followers: ${object.followers}`
+  cardFollowing.textContent = `Following: ${object.following}`
+  cardBio.textContent = `Bio: ${object.bio}`
  
   // return the parent div of all elements created
   return cardContainer
